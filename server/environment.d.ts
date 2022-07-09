@@ -1,0 +1,17 @@
+import { Dialect } from "sequelize/types";
+
+export { };
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      PORT: number
+      dbUser: string
+      dbHost: string
+      dbDatabase: string
+      dbPassword: string
+      dbPort: number
+      dbDialect: Dialect
+    }
+  }
+}
