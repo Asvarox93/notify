@@ -2,6 +2,7 @@ import { UserAttributes } from '../../types';
 import { Request, Response } from 'express';
 import Users from '../models/User.model'
 import { userFieldsValidation } from '../util/UserValidation.util';
+import { setErrorMessange } from '../util/util';
 // import {Op} from "sequelize"
 
 const findAll = async (_req:Request, res:Response) => {
@@ -33,8 +34,7 @@ const create = async (req: Request, res: Response) => {
     }
     res.status(201).send({ status: 201, response: response })
   } catch (error:unknown) {
-    let message = "Unknown error"
-    if (error instanceof Error) message = error.message
+    const message = setErrorMessange(error)
     res.status(501).send({ status: 501, error: message })
   }
 }
@@ -64,13 +64,34 @@ const update = async (req: Request, res: Response) => {
     res.status(201).send({ status: 201, response: response })
     
   } catch (error:unknown) {
-    let message = "Unknown error"
-
-    if (error instanceof Error) message = error.message
-
+    const message = setErrorMessange(error)
     res.status(501).send({ status: 501, error: message })
   }
 }
 
-const UserController = {findAll, create, update}
+const remove = async (req: Request, res: Response) => {
+  const { ID } = req.body
+
+  if (ID == null) {
+    res.status(501).send({ status: 501, error: "No ID provided. Please try again later!" })
+    return
+  }
+  
+  try {
+    const response = await Users.destroy({ where: { ID: ID } })
+
+    if (!response) {
+      res.status(400).send({ status: 400, error: "Ups! User cannot be deleted. Please try again later!" })
+      return
+    }
+
+    res.status(201).send({ status: 201, response: response })
+  
+  }catch (error: unknown) {
+    const message = setErrorMessange(error)
+    res.status(501).send({ status: 501, error: message })
+  }
+}
+
+const UserController = {findAll, create, update, remove}
 export default UserController
