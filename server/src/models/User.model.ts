@@ -1,6 +1,6 @@
-import { UserModel } from './../../types';
+import { UserModel } from '../../types';
 import { DataTypes } from 'sequelize'
-import db from './../../database/dbConnect'
+import db from '../services/db.services'
 
 const User = db.define<UserModel>('User', {
   ID: {

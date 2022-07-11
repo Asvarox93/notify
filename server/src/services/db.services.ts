@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import dbConfig from './db.config'
+import dbConfig from '../../database/db.config'
 
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -18,8 +18,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 try {
   sequelize.authenticate();
   console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
+} catch (error: unknown) {
+  let message = "Something goes wrong with database connection"
+  
+  if (error instanceof Error) message = error.message
+  
+  console.error('Unable to connect to the database:', message);
 }
 
 

@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from 'express'
 
 import cors from 'cors'
-import userRouter from './src/routes/User'
-import db from './database/dbConnect'
+import userRouter from './src/routes/User.routers'
+import db from './src/services/db.services'
 
 const app:Express = express()
 const port = process.env.PORT || 8000

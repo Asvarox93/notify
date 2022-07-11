@@ -1,6 +1,6 @@
-import { MessangeModel } from './../../types';
+import { MessangeModel } from '../../types';
 import { DataTypes } from 'sequelize';
-import db from '../../database/dbConnect'
+import db from '../services/db.services'
 
 const Message = db.define<MessangeModel>('Messange', {
   ID: {

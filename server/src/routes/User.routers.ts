@@ -1,4 +1,4 @@
-import UserController from "../controllers/User";
+import UserController from "../controllers/User.controller";
 import { Router} from "express";
 
 const router = Router()
@@ -6,5 +6,6 @@ const users = UserController
 
 router.get('/', users.findAll)
 router.post('/create', users.create)
+router.put('/update', users.update)
 
 export default router
