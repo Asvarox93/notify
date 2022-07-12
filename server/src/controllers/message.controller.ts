@@ -24,7 +24,7 @@ const create = async (req: Request, res: Response) => {
   try {
     const response = await Message.create(messToCreate)
     if (!response) {
-      res.status(400).send({ status: 400, error: "Ups! Messange cannot be created. Please try again later!", response: response})
+      res.status(401).send({ status: 401, error: "Ups! Messange cannot be created. Please try again later!", response: response})
       return
     }
     res.status(201).send({ status: 201, response: response })
@@ -48,7 +48,7 @@ const remove = async (req: Request, res: Response) => {
     const response = await Message.destroy({ where: { ID: ID } })
 
     if (!response) {
-      res.status(400).send({ status: 400, error: "Ups! Message cannot be deleted. Please try again later!" })
+      res.status(401).send({ status: 401, error: "Ups! Message cannot be deleted. Please try again later!" })
       return
     }
 

@@ -57,7 +57,7 @@ const update = async (req: Request, res: Response) => {
     const response = await Users.update(user, { where: { ID: ID } })
 
     if (!response[0]) {
-      res.status(400).send({ status: 400, error: "Ups! User proporities cannot be updated. Please try again later!" })
+      res.status(401).send({ status: 401, error: "Ups! User proporities cannot be updated. Please try again later!" })
       return
     }
 
@@ -81,7 +81,7 @@ const remove = async (req: Request, res: Response) => {
     const response = await Users.destroy({ where: { ID: ID } })
 
     if (!response) {
-      res.status(400).send({ status: 400, error: "Ups! User cannot be deleted. Please try again later!" })
+      res.status(401).send({ status: 401, error: "Ups! User cannot be deleted. Please try again later!" })
       return
     }
 
