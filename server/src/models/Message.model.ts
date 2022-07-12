@@ -1,25 +1,28 @@
-import { MessangeModel } from '../../types';
+import { MessageModel } from '../../types';
 import { DataTypes } from 'sequelize';
 import db from '../services/db.services'
+import User from './user.model';
 
-const Message = db.define<MessangeModel>('Messange', {
+const Message = db.define<MessageModel>('Message', {
   ID: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-  senderID: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  receiverID: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  messange: {
+  senderID:{type:DataTypes.INTEGER},
+  receiverID: {type:DataTypes.INTEGER},
+  message: {
     type: DataTypes.STRING,
     allowNull: false
   }
+})
+
+User.hasOne(Message, {
+  foreignKey: {name:"senderID", allowNull: false}
+})
+
+User.hasOne(Message, {
+  foreignKey: {name:"receiverID", allowNull: false}
 })
 
 export default Message

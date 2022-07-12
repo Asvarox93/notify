@@ -1,19 +1,19 @@
 import { UserAttributes } from '../../types';
 import { Request, Response } from 'express';
 import Users from '../models/user.model'
-import { userFieldsValidation } from '../util/userValidation.util';
-import { setErrorMessange } from '../util/util';
+import { userFieldsValidation } from '../util/fieldsValidation.util';
+import { setErrorMessage } from '../util/util';
 // import {Op} from "sequelize"
 
 const findAll = async (_req:Request, res:Response) => {
 
   const response = await Users.findAll()
-  res.send(response)
+  res.status(201).send(response)
 }
 
 const create = async (req: Request, res: Response) => {
   if (!userFieldsValidation(req.body)) {
-    res.status(400).send({ status: 400, error: "Ups! User cannot be createed. Please try again later!"})
+    res.status(400).send({ status: 400, error: "Fields validation faild! User cannot be createed. Please try again later!"})
     return
   }
   
@@ -29,12 +29,12 @@ const create = async (req: Request, res: Response) => {
   try {
     const response = await Users.create(user)
     if (!response) {
-      res.status(400).send({ status: 400, error: "Ups! User cannot be createed. Please try again later!", response: response})
+      res.status(400).send({ status: 400, error: "Ups! User cannot be created. Please try again later!", response: response})
       return
     }
     res.status(201).send({ status: 201, response: response })
   } catch (error:unknown) {
-    const message = setErrorMessange(error)
+    const message = setErrorMessage(error)
     res.status(501).send({ status: 501, error: message })
   }
 }
@@ -64,7 +64,7 @@ const update = async (req: Request, res: Response) => {
     res.status(201).send({ status: 201, response: response })
     
   } catch (error:unknown) {
-    const message = setErrorMessange(error)
+    const message = setErrorMessage(error)
     res.status(501).send({ status: 501, error: message })
   }
 }
@@ -88,7 +88,7 @@ const remove = async (req: Request, res: Response) => {
     res.status(201).send({ status: 201, response: response })
   
   }catch (error: unknown) {
-    const message = setErrorMessange(error)
+    const message = setErrorMessage(error)
     res.status(501).send({ status: 501, error: message })
   }
 }

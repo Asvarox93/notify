@@ -10,11 +10,11 @@ export type UserAttributes = {
 export type UserOptionalAttributes = Optional<UserAttributes, 'ID'>;
 export type UserModel = Model<UserAttributes, UserOptionalAttributes>
 
-export type MessangeAttributes = {
+export type MessageAttributes = {
   ID: number,
   senderID: number,
   receiverID: number,
-  messange: string
+  message: string
 }
-export type MessangeOptionalAttributes = Optional<MessangeAttributes, 'ID'>;
-export type MessangeModel = Model<MessangeAttributes, MessangeOptionalAttributes>
+export type MessageOptionalAttributes = Optional<MessageAttributes, 'ID'>;
+export type MessageModel = Model<MessageAttributes, MessageOptionalAttributes>
