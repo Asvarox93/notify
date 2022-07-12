@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express'
 
 import cors from 'cors'
-import userRouter from './src/routes/User.routers'
+import userRouter from './src/routes/user.routers'
 import db from './src/services/db.services'
 
 const app:Express = express()

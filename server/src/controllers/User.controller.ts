@@ -1,7 +1,7 @@
 import { UserAttributes } from '../../types';
 import { Request, Response } from 'express';
-import Users from '../models/User.model'
-import { userFieldsValidation } from '../util/UserValidation.util';
+import Users from '../models/user.model'
+import { userFieldsValidation } from '../util/userValidation.util';
 import { setErrorMessange } from '../util/util';
 // import {Op} from "sequelize"
 
