@@ -1,8 +1,8 @@
 import { MessageAttributes } from './../../types';
-import { UserAttributes } from "../../types"
+import { UserWithPass } from "../../types"
 
-export const userFieldsValidation = (user: UserAttributes, checkId?: boolean): boolean => {
-  const {ID, firstName, lastName, nickname, password }: UserAttributes = user
+export const userFieldsValidation = (user: UserWithPass, checkId?: boolean): boolean => {
+  const {ID, firstName, lastName, nickname, password }: UserWithPass = user
   
   if (!firstName && !lastName && !nickname && !password) return false
   if (checkId && ID == null ) return false

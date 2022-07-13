@@ -12,6 +12,8 @@ declare global {
       dbPassword: string
       dbPort: number
       dbDialect: Dialect
+      TOKEN_SECRET: Secret
+      REFRESH_TOKEN_SECRET: Secret
     }
   }
 }

@@ -1,5 +1,5 @@
-import { UserAttributes } from '../../types';
-import { Request, Response } from 'express';
+import { UserWithPass } from '../../types';
+import { Request, response, Response } from 'express';
 import Users from '../models/user.model'
 import { userFieldsValidation } from '../util/fieldsValidation.util';
 import { setErrorMessage } from '../util/util';
@@ -17,9 +17,9 @@ const create = async (req: Request, res: Response) => {
     return
   }
   
-  const { firstName, lastName, nickname, password }: UserAttributes = req.body
+  const { firstName, lastName, nickname, password }: UserWithPass = req.body
 
-  const user:UserAttributes = {
+  const user:UserWithPass = {
     firstName,
     lastName,
     nickname,
@@ -45,8 +45,8 @@ const update = async (req: Request, res: Response) => {
     return
   }
 
-  const { ID, firstName, lastName, nickname, password }: UserAttributes = req.body
-  const user:UserAttributes = {
+  const { ID, firstName, lastName, nickname, password }: UserWithPass = req.body
+  const user:UserWithPass = {
     firstName,
     lastName,
     nickname,

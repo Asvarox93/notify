@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express'
 
 import cors from 'cors'
+import authRouter from './src/routes/auth.routers'
 import userRouter from './src/routes/user.routers'
 import messageRouter from './src/routes/message.routers'
 import db from './src/services/db.services'
@@ -13,6 +14,7 @@ db.sync();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cors())
+app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
 app.use("/api/message", messageRouter)
 
