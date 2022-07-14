@@ -23,6 +23,10 @@ const User = db.define<UserModel>('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  refToken: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 })
 

@@ -1,11 +1,10 @@
 import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
 import { Login, UserAttributes } from './../../types';
 import User from "../models/user.model";
 import { setErrorMessage } from '../util/util';
-
-
 
 const loginToken = async (req: Request, res: Response) => { 
   const { username, password }: Login = req.body; 
@@ -14,32 +13,39 @@ const loginToken = async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { nickname: username }})
   if (!user) return res.status(404).send({ status: 404, message: "Invalid email or password" })
   
-  // TODO: Chech if password provided is correct - use bcrypt
-  // const validPassword = await bcrypt.compare(password, user[0].password)
+  const validPassword = await bcrypt.compare(password, user.get().password)
+  if (!validPassword) return res.status(404).send({ status: 404, message: "Invalid email or password" })
+  
   const {ID, firstName, lastName, nickname} = user.get()
   const validUser: UserAttributes = { ID, firstName, lastName, nickname }
   
   const accessToken = jwt.sign(validUser, process.env.TOKEN_SECRET, { expiresIn: 86400 })
-  // TODO: Create table in DB to store refresh token
   const refreshToken = jwt.sign(validUser, process.env.REFRESH_TOKEN_SECRET, { expiresIn: 525600 })
+  user.update({refToken:refreshToken})
 
   res.status(200).send({accessToken, refreshToken})
 }
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken = req.body.token
+  if (!refreshToken) return res.status(401).send({ status: 401, message: "Token not provided" })
+  
+  const { ID } = jwt_decode(refreshToken) as UserAttributes
+  if (ID === undefined) return res.status(401).send({ status: 401, message: "Token is not valid" })
+  
+  const user = await User.findOne({ where: { ID } })
+  if (user === null) return res.status(401).send({ status: 401, message: "Token is not valid" })
+  
+  if (user.get('refToken') !== refreshToken) return res.status(401).send({ status: 401, message: "Token is not valid" })
 
-  if(!refreshToken) return res.status(401).send({ status: 401, message:"Token not provided"})
-
-  //TODO: Check if refresh token exist in DB
   try {
-    await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
   } catch (error: unknown) {
     const message = setErrorMessage(error)
     return res.status(403).send({ status: 403, error: message })
   }
 
-  const {ID, firstName, lastName, nickname} = jwt_decode(refreshToken) as UserAttributes
+  const {firstName, lastName, nickname} = user.get()
   const validUser = {ID, firstName, lastName, nickname}
 
   const accessToken = jwt.sign(validUser, process.env.TOKEN_SECRET, { expiresIn: 86400 })

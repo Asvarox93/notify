@@ -8,6 +8,7 @@ export interface UserAttributes {
 }
 export interface UserWithPass extends UserAttributes {
   password: string
+  refToken?: string
 }
 export type UserOptionalAttributes = Optional<UserWithPass, 'ID'>;
 export type UserModel = Model<UserWithPass, UserOptionalAttributes>

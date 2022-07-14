@@ -9,7 +9,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
 
   
   jwt.verify(token, process.env.TOKEN_SECRET, (err: any)  => { 
-    if(err) return res.status(403)
+    if (err) return res.status(403).send({ status: 403, message: err.message })
      console.log("Tu jestem2")
     next()
   })

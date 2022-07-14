@@ -1,5 +1,6 @@
+import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
 import { UserWithPass } from '../../types';
-import { Request, response, Response } from 'express';
 import Users from '../models/user.model'
 import { userFieldsValidation } from '../util/fieldsValidation.util';
 import { setErrorMessage } from '../util/util';
@@ -18,12 +19,13 @@ const create = async (req: Request, res: Response) => {
   }
   
   const { firstName, lastName, nickname, password }: UserWithPass = req.body
+  const hashPassword = await bcrypt.hash(password, 10)
 
   const user:UserWithPass = {
     firstName,
     lastName,
     nickname,
-    password
+    password:hashPassword
   }
 
   try {
