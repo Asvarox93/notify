@@ -1,10 +1,13 @@
 import express, { Express, Request, Response } from 'express'
-
 import cors from 'cors'
+import {createServer} from 'http'
 import authRouter from './src/routes/auth.routers'
 import userRouter from './src/routes/user.routers'
 import messageRouter from './src/routes/message.routers'
 import db from './src/services/db.services'
+import createSocketServer from './src/services/socket.services'
+import onConnection from './src/routes/socket.routers'
+
 
 const app:Express = express()
 const port = process.env.PORT || 8000
@@ -22,6 +25,11 @@ app.get('/', (_req: Request, res: Response) => {
   res.json({ info: 'Hello World' })
 })
 
-app.listen(port, () => {
+const httpServer = createServer(app)
+
+const io = createSocketServer(httpServer)
+io.on("connection", onConnection)
+
+httpServer.listen(port, () => {
   console.log(`⚡️[SERVER]: Server is running at https://localhost:${port}`)
 })

@@ -27,3 +27,17 @@ export type Login = {
   password: string
 }
 
+export interface ServerToClientEvents {
+  "chat:receive": (messange:string) => void;
+}
+
+export interface ClientToServerEvents {
+  "chat:join": (room:string) => void;
+  "chat:send": (payload:{room:string, message:string}) => void;
+}
+
+export interface SocketData {
+  nickname: string;
+  token: number;
+}
+
