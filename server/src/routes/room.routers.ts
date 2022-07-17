@@ -1,11 +1,10 @@
-import { Router} from "express";
+import { Router } from "express";
 import roomController from "../controllers/room.controller";
 import authenticate from "../services/auth.services";
 
+const router = Router();
+const room = roomController;
 
-const router = Router()
-const room = roomController
+router.post("/", authenticate, room.fetchRoom);
 
-router.post('/', authenticate, room.fetchRoom)
-
-export default router
+export default router;

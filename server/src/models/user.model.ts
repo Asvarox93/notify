@@ -1,33 +1,33 @@
-import { UserModel } from '../../types/model.types';
-import { DataTypes } from 'sequelize'
-import db from '../services/db.services'
+import { UserModel } from "../../types/model.types";
+import { DataTypes } from "sequelize";
+import db from "../services/db.services";
 
-const User = db.define<UserModel>('User', {
+const User = db.define<UserModel>("User", {
   ID: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
   },
   firstName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   nickname: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   refToken: {
     type: DataTypes.STRING,
-    allowNull: true
-  }
-})
+    allowNull: true,
+  },
+});
 
-export default User
+export default User;

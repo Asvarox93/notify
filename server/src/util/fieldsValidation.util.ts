@@ -1,19 +1,24 @@
-import { MessageAttributes } from './../../types';
-import { UserWithPass } from "../../types"
+import { MessageAttributes, UserWithPass } from "./../../types/model.types";
 
-export const userFieldsValidation = (user: UserWithPass, checkId?: boolean): boolean => {
-  const {ID, firstName, lastName, nickname, password }: UserWithPass = user
-  
-  if (!firstName && !lastName && !nickname && !password) return false
-  if (checkId && ID == null ) return false
+export const userFieldsValidation = (
+  user: UserWithPass,
+  checkId?: boolean
+): boolean => {
+  const { ID, firstName, lastName, nickname, password }: UserWithPass = user;
 
-  return true
-}
-export const messageFieldsValidation = (mess: MessageAttributes, checkId?: boolean): boolean => {
-  const {ID, senderID, receiverID, message }: MessageAttributes = mess
-  
-  if (!senderID && !receiverID && !message) return false
-  if (checkId && ID == null ) return false
+  if (!firstName && !lastName && !nickname && !password) return false;
+  if (checkId && ID == null) return false;
 
-  return true
-}
+  return true;
+};
+export const messageFieldsValidation = (
+  mess: MessageAttributes,
+  checkId?: boolean
+): boolean => {
+  const { ID, senderID, receiverID, message }: MessageAttributes = mess;
+
+  if (!senderID && !receiverID && !message) return false;
+  if (checkId && ID == null) return false;
+
+  return true;
+};

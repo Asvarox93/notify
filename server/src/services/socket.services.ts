@@ -1,16 +1,23 @@
-import { Server } from 'socket.io'
-import { Server as httpServer } from 'http'
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from '../../types/socket.types'
+import { Server } from "socket.io";
+import { Server as httpServer } from "http";
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+  SocketData,
+} from "../../types/socket.types";
 
 const createSocketServer = (httpServer: httpServer) => {
-  const io = new Server<ClientToServerEvents, ServerToClientEvents,SocketData>(httpServer, {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST', 'PUT']
+  const io = new Server<ClientToServerEvents, ServerToClientEvents, SocketData>(
+    httpServer,
+    {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST", "PUT"],
+      },
     }
-  })
+  );
 
-  return io
-}
+  return io;
+};
 
-export default createSocketServer
+export default createSocketServer;

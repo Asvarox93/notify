@@ -1,34 +1,34 @@
-import { RoomModel } from '../../types/model.types';
-import { DataTypes } from 'sequelize'
-import db from '../services/db.services'
-import User from './user.model';
+import { RoomModel } from "../../types/model.types";
+import { DataTypes } from "sequelize";
+import db from "../services/db.services";
+import User from "./user.model";
 
-const Room = db.define<RoomModel>('Room', {
+const Room = db.define<RoomModel>("Room", {
   ID: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
   },
   firstUserID: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   secondUserID: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   roomUid: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
 User.hasOne(Room, {
-  foreignKey: {name:"firstUserID", allowNull: false}
-})
+  foreignKey: { name: "firstUserID", allowNull: false },
+});
 
 User.hasOne(Room, {
-  foreignKey: {name:"secondUserID", allowNull: false}
-})
+  foreignKey: { name: "secondUserID", allowNull: false },
+});
 
-export default Room
+export default Room;
