@@ -35,25 +35,3 @@ export type RoomAttributes = {
 }
 
 export type RoomModel = Model<RoomAttributes>
-
-export type chatMessageAttributes = {
-  room: string,
-  senderID: number,
-  receiverID?: number,
-  message: string
-}
-
-export interface ServerToClientEvents {
-  "chat:receive": (arg:{status:string, message:string}) => void;
-}
-
-export interface ClientToServerEvents {
-  "chat:join": (room:string) => void;
-  "chat:send": (data:chatMessageAttributes) => void;
-}
-
-export interface SocketData {
-  nickname: string;
-  token: number;
-}
-

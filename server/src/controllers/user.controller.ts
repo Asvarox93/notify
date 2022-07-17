@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { UserWithPass } from '../../types';
+import { UserWithPass } from '../../types/model.types';
 import Users from '../models/user.model'
 import { userFieldsValidation } from '../util/fieldsValidation.util';
 import { setErrorMessage } from '../util/util';

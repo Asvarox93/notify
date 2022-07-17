@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { Login, UserAttributes } from './../../types';
+import { Login, UserAttributes } from './../../types/model.types';
 import User from "../models/user.model";
 import { setErrorMessage } from '../util/util';
 

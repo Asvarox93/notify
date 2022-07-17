@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io'
-import { ClientToServerEvents } from '../../types'
+import { ClientToServerEvents } from '../../types/socket.types'
 import {socketController as sc} from '../controllers/socket.controller'
 
 const onConnection = (socket: Socket<ClientToServerEvents>) => {

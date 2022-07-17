@@ -1,4 +1,4 @@
-import { MessageModel } from '../../types';
+import { MessageModel } from '../../types/model.types';
 import { DataTypes } from 'sequelize';
 import db from '../services/db.services'
 import User from './user.model';

@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
 import { Server as httpServer } from 'http'
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from '../../types'
+import { ClientToServerEvents, ServerToClientEvents, SocketData } from '../../types/socket.types'
 
 const createSocketServer = (httpServer: httpServer) => {
   const io = new Server<ClientToServerEvents, ServerToClientEvents,SocketData>(httpServer, {

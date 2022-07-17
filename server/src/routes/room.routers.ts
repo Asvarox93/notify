@@ -8,5 +8,4 @@ const room = roomController
 
 router.post('/', authenticate, room.fetchRoom)
 
-
 export default router

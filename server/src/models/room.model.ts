@@ -1,4 +1,4 @@
-import { RoomModel } from '../../types';
+import { RoomModel } from '../../types/model.types';
 import { DataTypes } from 'sequelize'
 import db from '../services/db.services'
 import User from './user.model';

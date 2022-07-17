@@ -1,4 +1,4 @@
-import { MessageAttributes } from './../../types';
+import { MessageAttributes } from './../../types/model.types';
 import { messageFieldsValidation } from './../util/fieldsValidation.util';
 import { Request, Response } from "express"
 import Message from "../models/message.model"
