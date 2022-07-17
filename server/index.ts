@@ -4,6 +4,7 @@ import {createServer} from 'http'
 import authRouter from './src/routes/auth.routers'
 import userRouter from './src/routes/user.routers'
 import messageRouter from './src/routes/message.routers'
+import roomRouter from './src/routes/room.routers'
 import db from './src/services/db.services'
 import createSocketServer from './src/services/socket.services'
 import onConnection from './src/routes/socket.routers'
@@ -20,6 +21,7 @@ app.use(cors())
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
 app.use("/api/message", messageRouter)
+app.use("/api/room", roomRouter)
 
 app.get('/', (_req: Request, res: Response) => {
   res.json({ info: 'Hello World' })

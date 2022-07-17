@@ -14,7 +14,7 @@ export type UserOptionalAttributes = Optional<UserWithPass, 'ID'>;
 export type UserModel = Model<UserWithPass, UserOptionalAttributes>
 
 export type MessageAttributes = {
-  ID: number,
+  ID?: number,
   senderID: number,
   receiverID: number,
   message: string
@@ -26,6 +26,15 @@ export type Login = {
   username: string,
   password: string
 }
+
+export type RoomAttributes = {
+  ID?: number,
+  firstUserID: number,
+  secondUserID: number,
+  roomUid: string
+}
+
+export type RoomModel = Model<RoomAttributes>
 
 export interface ServerToClientEvents {
   "chat:receive": (messange:string) => void;
