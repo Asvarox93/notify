@@ -44,7 +44,7 @@ export type chatMessageAttributes = {
 }
 
 export interface ServerToClientEvents {
-  "chat:receive": (arg:{message:string}) => void;
+  "chat:receive": (arg:{status:string, message:string}) => void;
 }
 
 export interface ClientToServerEvents {
