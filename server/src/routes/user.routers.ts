@@ -1,13 +1,16 @@
-import UserController from "../controllers/user.controller";
 import { Router } from "express";
-import authenticate from "../services/auth.services";
+import { IUserService } from "../../types/services.types";
+import authenticate from "../configs/auth.config";
 
-const router = Router();
-const users = UserController;
+const routes = (userService: IUserService) => {
+  const router = Router();
 
-router.get("/", authenticate, users.findAll);
-router.post("/create", users.create);
-router.put("/update", authenticate, users.update);
-router.delete("/delete", authenticate, users.remove);
+  router.get("/", authenticate, userService.findAll);
+  router.post("/create", userService.create);
+  router.put("/update", authenticate, userService.update);
+  router.delete("/delete", authenticate, userService.remove);
 
-export default router;
+  return router;
+};
+
+export default routes;

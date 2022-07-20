@@ -1,11 +1,11 @@
-import { Socket } from "socket.io";
-import { ClientToServerEvents } from "../../types/socket.types";
-import { socketController as sc } from "../controllers/socket.controller";
+import { ISocketService } from "../../types/services.types";
 
-const onConnection = (socket: Socket<ClientToServerEvents>) => {
+const routes = (socketService: ISocketService) => {
+  const socket = socketService.getSocket();
+
   console.log(`User connected: ${socket.id}`);
-  socket.on("chat:join", sc.joinRoom);
-  socket.on("chat:send", sc.sendMessages);
+  socket.on("chat:join", socketService.joinRoom);
+  socket.on("chat:send", socketService.sendMessage);
 };
 
-export default onConnection;
+export default routes;

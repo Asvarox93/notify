@@ -1,23 +1,23 @@
-import { Server } from "socket.io";
-import { Server as httpServer } from "http";
-import {
-  ClientToServerEvents,
-  ServerToClientEvents,
-  SocketData,
-} from "../../types/socket.types";
+import { Socket } from "socket.io";
+import { ISocketController } from "../../types/controllers.types";
+import { ISocketService } from "../../types/services.types";
+import { chatJoinAttributes, chatMessageAttributes, ServerToClientEvents } from "../../types/socket.types";
 
-const createSocketServer = (httpServer: httpServer) => {
-  const io = new Server<ClientToServerEvents, ServerToClientEvents, SocketData>(
-    httpServer,
-    {
-      cors: {
-        origin: "*",
-        methods: ["GET", "POST", "PUT"],
-      },
-    }
-  );
+export default class SocketService implements ISocketService {
+  private socketController: ISocketController;
 
-  return io;
-};
+  constructor(socketController: ISocketController) {
+    this.socketController = socketController;
+  }
+  getSocket(): Socket<ServerToClientEvents, ServerToClientEvents> {
+    return this.socketController.getSocket();
+  }
 
-export default createSocketServer;
+  joinRoom = (data: chatJoinAttributes)  => {
+    return this.socketController.joinRoom(data);
+  }
+
+  sendMessage = (data: chatMessageAttributes) => {
+    return this.socketController.sendMessage(data);
+  }
+}

@@ -1,10 +1,12 @@
+import { IAuthService } from './../../types/services.types';
 import { Router } from "express";
-import authController from "../controllers/auth.controller";
 
-const router = Router();
-const auth = authController;
+const routers = (authService: IAuthService) => {
+  const router = Router();
+  router.post("/login", authService.loginToken);
+  router.post("/refresh", authService.refreshToken);
 
-router.post("/login", auth.loginToken);
-router.post("/refresh", auth.refreshToken);
+  return router;
+}
 
-export default router;
+export default routers;

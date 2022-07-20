@@ -1,10 +1,14 @@
 import { Router } from "express";
-import roomController from "../controllers/room.controller";
-import authenticate from "../services/auth.services";
+import { IRoomService } from "../../types/services.types";
+import authenticate from "../configs/auth.config";
 
-const router = Router();
-const room = roomController;
 
-router.post("/", authenticate, room.fetchRoom);
+const routes = (roomService: IRoomService) => {
+  const router = Router();
 
-export default router;
+  router.post("/", authenticate, roomService.fetchRoom);
+
+  return router;
+};
+
+export default routes

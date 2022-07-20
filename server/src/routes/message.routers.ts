@@ -1,12 +1,15 @@
 import { Router } from "express";
-import messangesController from "../controllers/message.controller";
-import authenticate from "../services/auth.services";
+import { IMessageService } from "../../types/services.types";
+import authenticate from "../configs/auth.config";
 
-const router = Router();
-const messages = messangesController;
+const routes = (messageService: IMessageService) => {
+  const router = Router();
 
-router.get("/", authenticate, messages.findAll);
-router.post("/create", authenticate, messages.create);
-router.delete("/delete", authenticate, messages.remove);
+  router.get("/", authenticate, messageService.findAll);
+  router.post("/create", authenticate, messageService.create);
+  router.delete("/delete", authenticate, messageService.remove);
 
-export default router;
+  return router;
+};
+
+export default routes;

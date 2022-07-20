@@ -1,4 +1,4 @@
-import { MessageAttributes, UserWithPass } from "./../../types/model.types";
+import { MessageAttributes, UserWithPass } from "../../types/models.types";
 
 export const userFieldsValidation = (
   user: UserWithPass,
@@ -6,10 +6,10 @@ export const userFieldsValidation = (
 ): boolean => {
   const { ID, firstName, lastName, nickname, password }: UserWithPass = user;
 
-  if (!firstName && !lastName && !nickname && !password) return false;
-  if (checkId && ID == null) return false;
+  if (firstName && lastName && nickname && password) return true;
+  if (checkId && ID != null) return true;
 
-  return true;
+  return false;
 };
 export const messageFieldsValidation = (
   mess: MessageAttributes,

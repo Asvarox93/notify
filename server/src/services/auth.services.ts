@@ -1,21 +1,15 @@
-import jwt from "jsonwebtoken";
-import { NextFunction, Request, Response } from "express";
-import { setErrorMessage } from "../util/util";
-
-const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (token == null)
-    return res
-      .status(401)
-      .send({ status: 401, message: "Unable to authenticate" });
-
-  jwt.verify(token, process.env.TOKEN_SECRET, (error: unknown) => {
-    const message = setErrorMessage(error);
-    if (error) return res.status(403).send({ status: 403, message: message });
-    next();
-  });
-};
-
-export default authenticate;
+import { IAuthService } from "../../types/services.types";
+import { IAuthController } from "../../types/controllers.types";
+import { Request, Response } from "express";
+export default class AuthService implements IAuthService {
+  private authController: IAuthController;
+  constructor(authController: IAuthController) {
+    this.authController = authController;
+  }
+  loginToken(req: Request, res: Response) {
+    return this.authController.loginToken(req, res);
+  }
+  refreshToken(req: Request, res: Response) {
+    return this.authController.refreshToken(req, res);
+  }
+}
