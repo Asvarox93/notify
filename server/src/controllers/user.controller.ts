@@ -57,6 +57,7 @@ export default class UserController implements IUserController {
   };
 
   update = async (req: Request, res: Response) => {
+    
     if (!userFieldsValidation(req.body, true)) {
       res.status(400).send({
         status: 400,

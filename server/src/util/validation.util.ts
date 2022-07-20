@@ -5,6 +5,7 @@ export const userFieldsValidation = (
   checkId?: boolean
 ): boolean => {
   const { ID, firstName, lastName, nickname, password }: UserWithPass = user;
+  
 
   if (firstName && lastName && nickname && password) return true;
   if (checkId && ID != null) return true;
@@ -17,8 +18,8 @@ export const messageFieldsValidation = (
 ): boolean => {
   const { ID, senderID, receiverID, message }: MessageAttributes = mess;
 
-  if (!senderID && !receiverID && !message) return false;
-  if (checkId && ID == null) return false;
+  if (senderID && receiverID && message) return true;
+  if (checkId && ID != null) return true;
 
-  return true;
+  return false;
 };

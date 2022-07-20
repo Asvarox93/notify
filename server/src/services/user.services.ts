@@ -8,18 +8,18 @@ export default class UserService implements IUserController {
     this.userController = userController;
   }
 
-  create(req: Request, res: Response) {
+  create = (req: Request, res: Response) => {
     return this.userController.create(req, res);
   }
 
-  findAll(req: Request, res: Response) {
+  findAll = (req: Request, res: Response) => {
     return this.userController.findAll(req, res);
   }
 
-  update(req: Request, res: Response) {
+  update = (req: Request, res: Response) => {
     return this.userController.update(req, res);
   }
-  remove(req: Request, res: Response) {
+  remove = (req: Request, res: Response) => {
     return this.userController.remove(req, res);
   }
 }

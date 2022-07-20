@@ -8,7 +8,7 @@ export default class RoomService implements IRoomService {
     this.roomController = roomController;
   }
 
-  fetchRoom(req: Request, res: Response) {
+  fetchRoom = (req: Request, res: Response) => {
     return this.roomController.fetchRoom(req, res);
   }
 }
