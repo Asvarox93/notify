@@ -2,9 +2,9 @@ import { UserModel, UserWithPass } from "../../types/models.types";
 import { IUserController } from "../../types/controllers.types";
 import { ModelStatic } from "sequelize/types";
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+
 import { userFieldsValidation } from "../util/validation.util";
-import { setErrorMessage } from "../util/util";
+import { encryptPassword, setErrorMessage } from "../util/util";
 
 
 export default class UserController implements IUserController {
@@ -16,7 +16,7 @@ export default class UserController implements IUserController {
 
   findAll = async (_req: Request, res: Response) => {
     const response = await this.userModel.findAll();
-    res.status(201).send(response);
+    res.status(200).send({ users: response });
   };
 
   create = async (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ export default class UserController implements IUserController {
     }
 
     const { firstName, lastName, nickname, password }: UserWithPass = req.body;
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashPassword = await encryptPassword(password);
 
     const user: UserWithPass = {
       firstName,
@@ -76,7 +76,6 @@ export default class UserController implements IUserController {
     };
 
     //TODO: Check token and password before update
-
     try {
       const response = await this.userModel.update(user, { where: { ID: ID } });
 
@@ -89,7 +88,7 @@ export default class UserController implements IUserController {
         return;
       }
 
-      res.status(201).send({ status: 201, response: response });
+      res.status(200).send({ status: 200, response: response });
     } catch (error: unknown) {
       const message = setErrorMessage(error);
       res.status(501).send({ status: 501, error: message });
@@ -100,25 +99,27 @@ export default class UserController implements IUserController {
     const { ID } = req.body;
 
     if (ID == null) {
-      res.status(501).send({
-        status: 501,
+      res.status(400).send({
+        status: 400,
         error: "No ID provided. Please try again later!",
       });
       return;
     }
 
+    //TODO: Check token and password before remove
+
     try {
       const response = await this.userModel.destroy({ where: { ID: ID } });
 
       if (!response) {
-        res.status(401).send({
-          status: 401,
+        res.status(400).send({
+          status: 400,
           error: "Ups! User cannot be deleted. Please try again later!",
         });
         return;
       }
 
-      res.status(201).send({ status: 201, response: response });
+      res.status(200).send({ status: 200, response: response });
     } catch (error: unknown) {
       const message = setErrorMessage(error);
       res.status(501).send({ status: 501, error: message });

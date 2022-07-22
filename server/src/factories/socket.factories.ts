@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize/types";
 import {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "../../types/socket.types";
+} from "../../types/sockets.types";
 import { ISocketService } from "../../types/services.types";
 import UserModel from "../models/user.model";
 import MessageModel from "../models/message.model";

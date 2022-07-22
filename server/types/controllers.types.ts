@@ -2,7 +2,7 @@ import {
   chatJoinAttributes,
   chatMessageAttributes,
   ServerToClientEvents,
-} from "./socket.types";
+} from "./sockets.types";
 import { Request, Response } from "express";
 import { Socket } from "socket.io/dist/socket";
 

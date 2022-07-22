@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { ISocketController } from "../../types/controllers.types";
 import { ISocketService } from "../../types/services.types";
-import { chatJoinAttributes, chatMessageAttributes, ServerToClientEvents } from "../../types/socket.types";
+import { chatJoinAttributes, chatMessageAttributes, ServerToClientEvents } from "../../types/sockets.types";
 
 export default class SocketService implements ISocketService {
   private socketController: ISocketController;

@@ -2,7 +2,7 @@ import {
   chatJoinAttributes,
   chatMessageAttributes,
   ServerToClientEvents,
-} from "../../types/socket.types";
+} from "../../types/sockets.types";
 import { ModelStatic } from "sequelize/types";
 import { ISocketController } from "../../types/controllers.types";
 import { MessageModel } from "../../types/models.types";

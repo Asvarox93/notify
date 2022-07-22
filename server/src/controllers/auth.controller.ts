@@ -18,7 +18,7 @@ export default class AuthController implements IAuthController {
     if (!username || !password) {
       return res
         .status(400)
-        .send({ status: 404, message: "Invalid email or password" });
+        .send({ status: 400, message: "Invalid email or password" });
     }
 
     const user = await this.userModel.findOne({
@@ -50,7 +50,7 @@ export default class AuthController implements IAuthController {
   };
 
   refreshToken = async (req: Request, res: Response) => {
-    const refreshToken = req.body.token;
+    const refreshToken = req.body.refToken;
     if (!refreshToken)
       return res
         .status(401)

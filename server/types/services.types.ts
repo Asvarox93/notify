@@ -6,7 +6,7 @@ import {
   ISocketController,
   IUserController,
 } from "./controllers.types";
-import { ClientToServerEvents } from "./socket.types";
+import { ClientToServerEvents } from "./sockets.types";
 
 export type IUserService = IUserController;
 
