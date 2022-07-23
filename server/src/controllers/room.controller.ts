@@ -22,7 +22,7 @@ export default class RoomController implements IRoomController {
 
     const lowerId = firstUserID < secondUserID ? firstUserID : secondUserID;
     const upperId = firstUserID > secondUserID ? firstUserID : secondUserID;
-
+    
     try {
       let room = await this.roomModel.findOne({
         where: { firstUserID: lowerId, secondUserID: upperId },
@@ -34,6 +34,7 @@ export default class RoomController implements IRoomController {
           roomUid: uuidv4(),
         });
       }
+
       return res.status(200).send({ status: 200, message: room });
     } catch (error: unknown) {
       const message = setErrorMessage(error);

@@ -19,7 +19,7 @@ describe("Testing util functions", () => {
         password: "Qwerty123",
       };
 
-      const result = userFieldsValidation(user); /*?*/
+      const result = userFieldsValidation(user);
       expect(result).toBe(true);
     });
     it("should return true if only valid user ID provided", () => {

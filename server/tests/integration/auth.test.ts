@@ -8,6 +8,7 @@ import app from "../../index"
 const refToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJCaWFsZWsiLCJuaWNrbmFtZSI6IkFzdmFyb3giLCJpYXQiOjE2NTgzODc1MTMsImV4cCI6MzMxODQ0Mjk5MTN9.b1DKDbqiscXXIMU7pdmzv169-f1EH2CpZVu_1zFEQOE"
 
 beforeAll(async () => {
+  await db.sync()
   const user: UserWithPass = {
     firstName: "Sebastian",
     lastName: "Bialek",
