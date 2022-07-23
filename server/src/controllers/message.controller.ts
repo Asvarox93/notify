@@ -19,7 +19,7 @@ export default class messageController implements IMessageService {
 
   create = async (req: Request, res: Response) => {
     if (!messageFieldsValidation(req.body)) {
-      res.status(400).send({
+      return res.status(400).send({
         status: 400,
         error:
           "Fields validation faild! Messange cannot be createed. Please try again later!",
@@ -36,12 +36,11 @@ export default class messageController implements IMessageService {
     try {
       const response = await this.messageModel.create(messToCreate);
       if (!response) {
-        res.status(401).send({
+        return res.status(401).send({
           status: 401,
           error: "Ups! Messange cannot be created. Please try again later!",
           response: response,
         });
-        return;
       }
       res.status(201).send({ status: 201, response: response });
     } catch (error: unknown) {
@@ -56,13 +55,14 @@ export default class messageController implements IMessageService {
     const { ID } = req.body;
 
     if (ID == null) {
-      res.status(501).send({
-        status: 501,
+      res.status(400).send({
+        status: 400,
         error: "No ID provided. Please try again later!",
       });
       return;
     }
-
+    
+  //TODO: check if user ID is equel with logged one
     try {
       const response = await this.messageModel.destroy({ where: { ID: ID } });
 
