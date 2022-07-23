@@ -1,11 +1,10 @@
-import { MessageAttributes, UserWithPass } from "../../types/models.types";
+import { MessageAttributes, UserIdOnly, UserWithPass } from "../../types/models.types";
 
 export const userFieldsValidation = (
-  user: UserWithPass,
+  user: UserWithPass | UserIdOnly,
   checkId?: boolean
 ): boolean => {
-  const { ID, firstName, lastName, nickname, password }: UserWithPass = user;
-  
+  const { ID, firstName, lastName, nickname, password } = user;
 
   if (firstName && lastName && nickname && password) return true;
   if (checkId && ID != null) return true;
@@ -14,12 +13,10 @@ export const userFieldsValidation = (
 };
 export const messageFieldsValidation = (
   mess: MessageAttributes,
-  checkId?: boolean
 ): boolean => {
-  const { ID, senderID, receiverID, message }: MessageAttributes = mess;
+  const {senderID, receiverID, message }: MessageAttributes = mess;
 
   if (senderID && receiverID && message) return true;
-  if (checkId && ID != null) return true;
 
   return false;
 };

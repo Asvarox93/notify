@@ -1,15 +1,24 @@
 import { Model, Optional } from "sequelize/types";
 
-export interface UserAttributes {
+export type UserAttributes = {
   ID?: number;
   firstName: string;
   lastName: string;
   nickname: string;
+};
+
+export type UserIdOnly = {
+  ID: number;
+  firstName?: string;
+  lastName?: string;
+  nickname?: string;
+  password?: string;
 }
 export interface UserWithPass extends UserAttributes {
   password: string;
   refToken?: string;
 }
+
 export type UserOptionalAttributes = Optional<UserWithPass, "ID">;
 export type UserModel = Model<UserWithPass, UserOptionalAttributes>;
 
