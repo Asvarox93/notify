@@ -1,0 +1,25 @@
+name: Serwer API workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+    name: Test backend server
+    steps:
+    - uses: actions/checkout@v3
+    - name: use Node.js ${{matrix.node-version}}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{matrix.node-version}}
+    - name: Go to server
+      run: cd server
+    - name: Install requirements
+      run: npm install
+    - name: Run tests and collect coverage
+      run: npm test -- --coverage
+    - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
