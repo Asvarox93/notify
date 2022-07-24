@@ -2,6 +2,17 @@ name: Serwer API workflow
 
 on: [push, pull_request]
 
+env:
+  PORT:8000
+  dbUser:postgres
+  dbHost:localhost
+  dbDatabase:Notify
+  dbPassword:Qwerty@123
+  dbPort:5432
+  dbDialect:postgres
+  TOKEN_SECRET:4cafa62edf3e11c8fb1c2643ec1285da0df7bc7d593be23f6e8f0022b692bde1231e71a03b1b74105b6891a3da497c5b911192e1cac977e16bb99344327e43ec
+  REFRESH_TOKEN_SECRET:7ebc8b13fec90bdc22322945198e5b45abda41fa62d38247f8f0fce86630ebad2efe36c0da0923937c663e2e63843b9dc9ba7c7e8b15bdde49ff5ceaae567526
+
 jobs:
   build:
     runs-on: ubuntu-latest
