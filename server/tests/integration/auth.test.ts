@@ -3,7 +3,9 @@ import { encryptPassword } from "../../src/util/util";
 import request from "supertest";
 import userModel from "../../src/models/user.model";
 import db from "../../src/configs/db.config"
-import app from "../../index"
+import server from "../../index";
+
+const app = server.app;
 
 const refToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJCaWFsZWsiLCJuaWNrbmFtZSI6IkFzdmFyb3giLCJpYXQiOjE2NTgzODc1MTMsImV4cCI6MzMxODQ0Mjk5MTN9.b1DKDbqiscXXIMU7pdmzv169-f1EH2CpZVu_1zFEQOE"
 

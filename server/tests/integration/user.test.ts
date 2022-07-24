@@ -1,8 +1,10 @@
 import { UserWithPass } from "../../types/models.types";
 import request from "supertest";
 import db from "../../src/configs/db.config";
-import app from "../../index";
+import server from "../../index";
 import userModel from "../../src/models/user.model";
+
+const app = server.app
 
 const user: UserWithPass = {
   firstName: "Sebastian",
