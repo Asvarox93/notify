@@ -1,4 +1,4 @@
-name: Serwer API workflow
+name: Serwer API Workflow
 
 on: [push, pull_request]
 

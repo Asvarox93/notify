@@ -1,6 +1,7 @@
 # Notify
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 [![codecov](https://codecov.io/gh/Asvarox93/notify/branch/main/graph/badge.svg?token=MTZ0Z3MB2T)](https://codecov.io/gh/Asvarox93/notify)
+![Backend Workflow](https://github.com/Asvarox93/notify/actions/workflows/server.yml/badge.svg)
 
 That's my first chat project that covers both backend and frontend servers.
 I was very excited that i have an opportunity and motivation to build that app.
