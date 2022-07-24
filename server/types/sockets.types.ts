@@ -3,6 +3,11 @@ export type chatJoinAttributes = {
   token: string;
 };
 
+export type chatSuccessAttributes = {
+  status: string;
+  room: string;
+};
+
 export type chatErrorAttributes = {
   status: string;
   message: string;
@@ -15,9 +20,17 @@ export type chatMessageAttributes = {
   message: string;
 };
 
+export type chatMessageDeliveredAttributes = {
+  status: string,
+  message: string
+}
+
 export interface ServerToClientEvents {
   "chat:demit": (arg: chatErrorAttributes) => void;
-  "chat:receive": (arg: chatErrorAttributes) => void;
+  "chat:receive": (arg: chatErrorAttributes, callback?: () => void) => void;
+  "chat:success": (arg: chatSuccessAttributes) => void;
+  "chat:delivered": (arg: chatMessageDeliveredAttributes) => void;
+  "chat:undelivered": (arg: chatMessageDeliveredAttributes) => void;
 }
 
 export interface ClientToServerEvents {

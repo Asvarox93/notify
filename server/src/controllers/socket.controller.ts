@@ -27,7 +27,7 @@ export default class SocketController implements ISocketController {
   joinRoom = async (data: chatJoinAttributes) => {
     const { room, token }: chatJoinAttributes = data;
     if (!room || !token)
-      this.socket.emit("chat:demit", {
+      return this.socket.emit("chat:demit", {
         status: "failure",
         message: "Room or Token not found!",
       });
@@ -35,28 +35,39 @@ export default class SocketController implements ISocketController {
     try {
       await jwt.verify(token, process.env.TOKEN_SECRET);
     } catch (_error: unknown) {
-      this.socket.emit("chat:demit", {
+      return this.socket.emit("chat:demit", {
         status: "failure",
         message: "Unauthorized! Authentication required",
       });
     }
 
     this.socket.join(room);
+    this.socket.emit("chat:success", { status: "success", room });
   };
 
   sendMessage = async (data: chatMessageAttributes) => {
     const { room, senderID, receiverID, message }: chatMessageAttributes = data;
     const errorMessage =
       "Message cannot be send to user. Please try again later!";
-
-    // If room is not a chat between users then send a message without save to db
-    if (receiverID === undefined)
-      return this.socket.to(room).emit("chat:receive", {
+    const returnDeliveredToSender = () => {
+      return this.socket.emit("chat:delivered", {
         status: "successfully",
         message,
       });
+    };
+
+    // If room is not a chat between users then send a message without save to db
+    if (receiverID === undefined)
+      return this.socket.to(room).emit(
+        "chat:receive",
+        {
+          status: "successfully",
+          message,
+        },
+        returnDeliveredToSender
+      );
     if (!message)
-      return this.socket.emit("chat:receive", {
+      return this.socket.emit("chat:undelivered", {
         status: "failure",
         message: "Message cennot be empty!",
       });
@@ -68,18 +79,21 @@ export default class SocketController implements ISocketController {
         message,
       });
       if (!response) {
-        this.socket.emit("chat:receive", {
+        this.socket.emit("chat:undelivered", {
           status: "failure",
           message: errorMessage,
         });
         return;
       }
-
       this.socket
         .to(room)
-        .emit("chat:receive", { status: "successfully", message });
+        .emit(
+          "chat:receive",
+          { status: "successfully", message },
+          returnDeliveredToSender
+        );
     } catch (_error: unknown) {
-      this.socket.emit("chat:receive", {
+      this.socket.emit("chat:undelivered", {
         status: "failure",
         message: errorMessage,
       });

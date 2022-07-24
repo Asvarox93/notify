@@ -7,7 +7,6 @@ export default class AuthService implements IAuthService {
     this.authController = authController;
   }
   loginToken =(req: Request, res: Response)=> {
-    console.log("BB",this);
     return this.authController.loginToken(req, res);
   }
   refreshToken=(req: Request, res: Response)=> {
