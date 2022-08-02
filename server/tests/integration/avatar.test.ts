@@ -26,14 +26,18 @@ beforeAll(async () => {
   });
 
   if (user === undefined) throw new Error("User cannot be created");
+
   userID = user.get().ID as number;
-  await AvatarModel(db, userModel).create({
+
+  const avatar = await AvatarModel(db, userModel).create({
     userID,
     filename: fileName,
     filepath: "assets/avatars/test_file.png",
     mimetype: "image/png",
     size: 97764,
   });
+
+  if (avatar === undefined) throw new Error("Avatar cannot be created");
 
   if (!fs.existsSync(filePath)) {
     fs.mkdirSync(filePath);

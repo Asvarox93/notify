@@ -12,11 +12,11 @@ class AvatarController implements IAvatarController {
 
   getAvatarByID = async (req: Request, res: Response) => {
     if (!req.params.ID)
-      return res.status(404).send({ status: 404, message: "Avatar not found" });
+      return res.status(404).send({ status: 404, message: "Avatar ID not found" });
 
     try {
       const avatar = await this.avatarModel.findByPk(req.params.ID);
-
+      
       if (!avatar)
         return res
           .status(404)
