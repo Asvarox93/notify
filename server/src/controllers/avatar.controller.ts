@@ -19,12 +19,16 @@ class AvatarController implements IAvatarController {
     try {
       const avatar = await this.avatarModel.findByPk(req.params.ID);
 
+      console.log("avatar", avatar);
+      console.log("avatarGet", avatar?.get());
+
       if (!avatar)
         return res
           .status(404)
           .send({ status: 404, message: "Avatar not found" });
 
       const file = resolveFilePath("assets/avatars/", avatar.get().filename);
+      console.log("file", file);
       return res.status(200).type(avatar.get().mimetype).sendFile(file);
     } catch (error: unknown) {
       const message = setErrorMessage(error);
