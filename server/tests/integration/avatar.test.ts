@@ -9,8 +9,9 @@ import AvatarModel from "../../src/models/avatar.model";
 const app = server.app;
 const authToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJCaWFsZWsiLCJuaWNrbmFtZSI6IkFzdmFyb3giLCJpYXQiOjE2NTg0MjkzOTksImV4cCI6MzMxODQ0NzE3OTl9.rj2pH9gvx6GIEzJlPza1w5U4n8FOPPsR-dLxgcb3foA";
-const filename = "test_file.png";
-const filepath = resolveFilePath("assets/avatars/", filename);
+const fileName = "test_file.png";
+const filePath = resolveFilePath("assets/avatars/");
+const fileFullPath = filePath + fileName;
 
 beforeAll(async () => {
   await db.sync();
@@ -27,21 +28,24 @@ beforeAll(async () => {
 
   await AvatarModel(db, userModel).create({
     userID: user.get().ID as number,
-    filename,
+    filename: fileName,
     filepath: "assets/avatars/test_file.png",
     mimetype: "image/png",
     size: 97764,
   });
 
-  fs.writeFileSync(filepath, "test");
+  if (!fs.existsSync(filePath)) {
+    fs.mkdirSync(filePath);
+  }
+
+  fs.writeFileSync(fileFullPath, "test");
 });
 
-//TODO: Undo comment here
-// afterAll(async () => {
-//   if (fs.existsSync(filepath)) {
-//     fs.unlinkSync(filepath);
-//   }
-// });
+afterAll(async () => {
+  if (fs.existsSync(fileFullPath)) {
+    fs.unlinkSync(fileFullPath);
+  }
+});
 
 describe("Avatar handlers", () => {
   describe("/api/avatar/:ID route", () => {

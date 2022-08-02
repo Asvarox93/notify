@@ -12,8 +12,10 @@ export const encryptPassword = async (password: string) => {
   return hashPassword;
 };
 
-export const resolveFilePath = (folder: string, filename: string) => {
-  const dirname = path.resolve();
-  const fullFilePath = path.join(dirname + "/src/", folder + filename);
-  return fullFilePath;
+export const resolveFilePath = (folder: string, filename?: string) => {
+  const dirname = path.resolve() + "/src/";
+  
+  if (filename) return path.join(dirname, folder + filename);
+  
+  return dirname;
 };
