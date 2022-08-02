@@ -46,11 +46,11 @@ beforeAll(async () => {
   fs.writeFileSync(fileFullPath, "test");
 });
 
-afterAll(async () => {
-  if (fs.existsSync(fileFullPath)) {
-    fs.unlinkSync(fileFullPath);
-  }
-});
+// afterAll(async () => {
+//   if (fs.existsSync(fileFullPath)) {
+//     fs.unlinkSync(fileFullPath);
+//   }
+// });
 
 describe("Avatar handlers", () => {
   describe("/api/avatar/:ID route", () => {
@@ -77,7 +77,7 @@ describe("Avatar handlers", () => {
         expect(response.statusCode).toBe(404);
       });
 
-      it("should return 404 status ocde if no ID", async () => {
+      it("should return 404 status code if no ID", async () => {
         const response = await request(app)
           .get("/api/avatar/")
           .set("Authorization", "Bearer " + authToken);
