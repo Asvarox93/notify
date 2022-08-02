@@ -46,11 +46,11 @@ beforeAll(async () => {
   fs.writeFileSync(fileFullPath, "test");
 });
 
-// afterAll(async () => {
-//   if (fs.existsSync(fileFullPath)) {
-//     fs.unlinkSync(fileFullPath);
-//   }
-// });
+afterAll(async () => {
+  if (fs.existsSync(fileFullPath)) {
+    fs.unlinkSync(fileFullPath);
+  }
+});
 
 describe("Avatar handlers", () => {
   describe("/api/avatar/:ID route", () => {
@@ -59,10 +59,6 @@ describe("Avatar handlers", () => {
         const response = await request(app)
           .get("/api/avatar/" + userID)
           .set("Authorization", "Bearer " + authToken);
-
-        console.log(response.body);
-        console.log(response.text);
-        console.log(response.statusCode);
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Buffer);

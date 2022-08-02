@@ -94,7 +94,6 @@ describe("User handlers", () => {
           .field("password", user.password)
           .attach("avatar", buffer, "sample.jpg");
 
-        console.log(response.body);
         expect(response.statusCode).toBe(201);
       });
       it("should return a newly created user", async () => {
