@@ -4,7 +4,7 @@ import dbConfig from "../../database/db.config";
 let sequelize;
 
 if (process.env.NODE_ENV === "test") {
-  sequelize = new Sequelize("sqlite::memory:");
+  sequelize = new Sequelize("sqlite::memory:", { logging: false });
 } else {
   sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === "test") {
       acquire: dbConfig.pool.acquire,
       idle: dbConfig.pool.idle,
     },
+    logging: false,
   });
 }
 
