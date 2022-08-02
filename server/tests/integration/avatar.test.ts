@@ -40,7 +40,7 @@ beforeAll(async () => {
   if (avatar === undefined) throw new Error("Avatar cannot be created");
 
   if (!fs.existsSync(filePath)) {
-    fs.mkdirSync(filePath);
+    fs.mkdirSync(filePath, { recursive: true });
   }
 
   fs.writeFileSync(fileFullPath, "test");
