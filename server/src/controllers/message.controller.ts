@@ -5,7 +5,7 @@ import { messageFieldsValidation } from "../util/validation.util";
 import { Request, Response } from "express";
 import { setErrorMessage } from "../util/util";
 
-export default class messageController implements IMessageService {
+export default class MessageController implements IMessageService {
   private messageModel: ModelStatic<MessageModel>;
 
   constructor(messageModel: ModelStatic<MessageModel>) {
@@ -61,8 +61,8 @@ export default class messageController implements IMessageService {
       });
       return;
     }
-    
-  //TODO: check if user ID is equel with logged one
+
+    //TODO: check if user ID is equel with logged one
     try {
       const response = await this.messageModel.destroy({ where: { ID: ID } });
 

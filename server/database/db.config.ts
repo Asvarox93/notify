@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 const dbConfig = {
   HOST: process.env.dbHost,
@@ -12,8 +12,8 @@ const dbConfig = {
     max: 5,
     min: 0,
     acquire: 30000,
-    idle: 10000
-  }
+    idle: 10000,
+  },
 };
 
-export default dbConfig
+export default dbConfig;

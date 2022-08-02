@@ -63,9 +63,9 @@ describe("Room handlers", () => {
           .post("/api/room/")
           .set("Authorization", "Bearer " + token)
           .send({
-            firstUserID: 1
-          })
-        
+            firstUserID: 1,
+          });
+
         expect(responst.statusCode).toBe(404);
       });
     });

@@ -10,16 +10,15 @@ import SocketController from "../controllers/socket.controller";
 import SocketService from "../services/socket.services";
 import { Socket } from "socket.io/dist/socket";
 
-
 const socketInstance = (
   db: Sequelize,
   socket: Socket<ClientToServerEvents, ServerToClientEvents>
-):ISocketService => {
+): ISocketService => {
   const userModel = UserModel(db);
   const messageModel = MessageModel(db, userModel);
   const socketController = new SocketController(messageModel, socket);
   const socketService = new SocketService(socketController);
-  
+
   return socketService;
 };
 

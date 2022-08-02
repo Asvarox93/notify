@@ -1,10 +1,20 @@
 import { UserWithPass } from "../../types/models.types";
+import * as fs from "fs";
 import request from "supertest";
 import db from "../../src/configs/db.config";
 import server from "../../index";
 import userModel from "../../src/models/user.model";
 
-const app = server.app
+jest.mock("../../src/configs/file.config", () => {
+  const oringalModule = jest.requireActual("multer");
+
+  return {
+    __esModule: true,
+    avatarImageUpload: oringalModule({ dest: "tests/assets/avatars/" }),
+  };
+});
+
+const app = server.app;
 
 const user: UserWithPass = {
   firstName: "Sebastian",
@@ -14,8 +24,27 @@ const user: UserWithPass = {
 };
 
 beforeAll(async () => {
-  await db.sync()
-})
+  await db.sync();
+});
+
+afterEach(async () => {
+  const path = "tests/assets/avatars";
+
+  const deleteFolderRecursive = (path: string) => {
+    if (fs.existsSync(path)) {
+      fs.readdirSync(path).forEach(function (file) {
+        const curPath = path + "/" + file;
+        if (fs.lstatSync(curPath).isDirectory()) {
+          deleteFolderRecursive(curPath);
+        } else {
+          fs.unlinkSync(curPath);
+        }
+      });
+    }
+  };
+
+  deleteFolderRecursive(path);
+});
 
 const authToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJCaWFsZWsiLCJuaWNrbmFtZSI6IkFzdmFyb3giLCJpYXQiOjE2NTg0MjkzOTksImV4cCI6MzMxODQ0NzE3OTl9.rj2pH9gvx6GIEzJlPza1w5U4n8FOPPsR-dLxgcb3foA";
@@ -55,23 +84,34 @@ describe("User handlers", () => {
   });
   describe("/api/users/create route", () => {
     describe("given valid user data", () => {
+      const buffer = Buffer.from("some data");
       it("should return 201 status code", async () => {
         const response = await request(app)
           .post("/api/users/create")
-          .send(user);
+          .field("firstName", user.firstName)
+          .field("lastName", user.lastName)
+          .field("nickname", user.nickname)
+          .field("password", user.password)
+          .attach("avatar", buffer, "sample.jpg");
 
+        console.log(response.body);
         expect(response.statusCode).toBe(201);
       });
       it("should return a newly created user", async () => {
         const response = await request(app)
           .post("/api/users/create")
-          .send(user);
+          .field("firstName", user.firstName)
+          .field("lastName", user.lastName)
+          .field("nickname", user.nickname)
+          .field("password", user.password)
+          .attach("avatar", buffer, "sample.jpg");
 
         expect(response.text).toContain("ID");
         expect(response.text).toContain("firstName");
         expect(response.text).toContain("lastName");
         expect(response.text).toContain("nickname");
         expect(response.text).toContain("password");
+        expect(response.text).toContain("avatar");
       });
     });
     describe("given invalid user data", () => {
@@ -80,10 +120,18 @@ describe("User handlers", () => {
         lastName: "Bialek",
       };
 
-      it("should return 400 status code", async () => {
+      it("should return 400 status code if no valid user data", async () => {
         const response = await request(app)
           .post("/api/users/create")
           .send(invalidUser);
+
+        expect(response.statusCode).toBe(400);
+      });
+
+      it("return 400 status code if no avatar file", async () => {
+        const response = await request(app)
+          .post("/api/users/create")
+          .send(user);
 
         expect(response.statusCode).toBe(400);
       });
@@ -156,8 +204,7 @@ describe("User handlers", () => {
 
         const response = await request(app)
           .delete("/api/users/delete")
-          .set("Authorization", "Bearer " + authToken)
-
+          .set("Authorization", "Bearer " + authToken);
 
         expect(response.statusCode).toBe(400);
       });
@@ -175,7 +222,6 @@ describe("User handlers", () => {
 
         expect(response.statusCode).toBe(400);
       });
-
     });
   });
 });

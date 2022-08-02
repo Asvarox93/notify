@@ -1,26 +1,63 @@
-import { UserModel, UserWithPass } from "../../types/models.types";
+import { AvatarAttributes } from "./../../types/models.types";
+import { AvatarModel, UserModel, UserWithPass } from "../../types/models.types";
 import { IUserController } from "../../types/controllers.types";
-import { ModelStatic } from "sequelize/types";
+import { ModelStatic, Sequelize } from "sequelize/types";
 import { Request, Response } from "express";
-
 import { userFieldsValidation } from "../util/validation.util";
 import { encryptPassword, setErrorMessage } from "../util/util";
 
-
 export default class UserController implements IUserController {
+  private db: Sequelize;
   private userModel: ModelStatic<UserModel>;
+  private avatarModel: ModelStatic<AvatarModel>;
 
-  constructor(userModel: ModelStatic<UserModel>) {
+  constructor(
+    db: Sequelize,
+    userModel: ModelStatic<UserModel>,
+    avatarModel: ModelStatic<AvatarModel>
+  ) {
+    this.db = db;
     this.userModel = userModel;
+    this.avatarModel = avatarModel;
   }
 
+  findById = async (req: Request, res: Response) => {
+    if (!userFieldsValidation(req.params as typeof req.body, true)) {
+      res.status(400).send({
+        status: 400,
+        error:
+          "Fields validation faild! User cannot be createed. Please try again later!",
+      });
+      return;
+    }
+
+    const { ID } = req.params;
+
+    try {
+      const user = await this.userModel.findByPk(ID);
+      const avatar = await this.avatarModel.findByPk(ID);
+
+      if (!user || !avatar)
+        return res.status(404).send({
+          status: 404,
+          error: "Ups! User cannot be find. Please try again later!",
+        });
+
+      res.status(201).send({ status: 201, response: { user, avatar } });
+    } catch (error: unknown) {
+      const message = setErrorMessage(error);
+      res.status(501).send({ status: 501, error: message });
+    }
+  };
+
   findAll = async (_req: Request, res: Response) => {
-    const response = await this.userModel.findAll();
-    res.status(200).send({ users: response });
+    const users = await this.userModel.findAll();
+    const avatars = await this.avatarModel.findAll();
+    res.status(200).send({ users, avatars });
   };
 
   create = async (req: Request, res: Response) => {
-    if (!userFieldsValidation(req.body)) {
+    if (!userFieldsValidation(req.body) || !req.file) {
       res.status(400).send({
         status: 400,
         error:
@@ -30,6 +67,9 @@ export default class UserController implements IUserController {
     }
 
     const { firstName, lastName, nickname, password }: UserWithPass = req.body;
+    const { filename, mimetype, size } = req.file;
+    const filepath = req.file.path;
+
     const hashPassword = await encryptPassword(password);
 
     const user: UserWithPass = {
@@ -40,7 +80,27 @@ export default class UserController implements IUserController {
     };
 
     try {
-      const response = await this.userModel.create(user);
+      const response = await this.db.transaction(async (transaction) => {
+        const validUser = await this.userModel.create(user, { transaction });
+        const userID = validUser.get().ID;
+
+        if (!userID) throw new Error("No user ID was found!");
+
+        const avatar: AvatarAttributes = {
+          userID,
+          filename,
+          filepath,
+          mimetype,
+          size,
+        };
+
+        const validAvatar = await this.avatarModel.create(avatar, {
+          transaction,
+        });
+
+        return { User: validUser, Avatar: validAvatar };
+      });
+
       if (!response) {
         res.status(400).send({
           status: 400,
@@ -57,7 +117,6 @@ export default class UserController implements IUserController {
   };
 
   update = async (req: Request, res: Response) => {
-    
     if (!userFieldsValidation(req.body, true)) {
       res.status(400).send({
         status: 400,
@@ -74,7 +133,7 @@ export default class UserController implements IUserController {
       nickname,
       password,
     };
-
+    //TODO: Add possibility to change a avatar
     //TODO: Check token and password before update
     try {
       const response = await this.userModel.update(user, { where: { ID: ID } });

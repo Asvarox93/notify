@@ -1,4 +1,4 @@
-import { IAuthService } from './../../types/services.types';
+import { IAuthService } from "./../../types/services.types";
 import { Sequelize } from "sequelize/types";
 import UserModel from "../models/user.model";
 import AuthController from "../controllers/auth.controller";

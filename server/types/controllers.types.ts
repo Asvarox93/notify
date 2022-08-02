@@ -8,6 +8,7 @@ import { Socket } from "socket.io/dist/socket";
 
 export interface IUserController {
   create(req: Request, res: Response): void;
+  findById(req: Request, res: Response): void;
   findAll(req: Request, res: Response): void;
   update(req: Request, res: Response): void;
   remove(req: Request, res: Response): void;
@@ -32,4 +33,8 @@ export interface IMessageController {
 export interface IAuthController {
   loginToken(req: Request, res: Response): void;
   refreshToken(req: Request, res: Response): void;
+}
+
+export interface IAvatarController {
+  getAvatarByID(req: Request, res: Response): void;
 }

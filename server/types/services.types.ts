@@ -1,6 +1,7 @@
 import { Socket } from "socket.io/dist/socket";
 import {
   IAuthController,
+  IAvatarController,
   IMessageController,
   IRoomController,
   ISocketController,
@@ -17,3 +18,4 @@ export interface ISocketService extends ISocketController {
 export type IRoomService = IRoomController;
 export type IMessageService = IMessageController;
 export type IAuthService = IAuthController;
+export type IAvatarService = IAvatarController;

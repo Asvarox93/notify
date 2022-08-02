@@ -21,9 +21,9 @@ export type chatMessageAttributes = {
 };
 
 export type chatMessageDeliveredAttributes = {
-  status: string,
-  message: string
-}
+  status: string;
+  message: string;
+};
 
 export interface ServerToClientEvents {
   "chat:demit": (arg: chatErrorAttributes) => void;

@@ -105,3 +105,7 @@ dist
 
 # Rest files
 *.rest
+
+# avatar assets folders
+server/src/assets
+server/tests/assets

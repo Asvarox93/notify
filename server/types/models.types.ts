@@ -13,7 +13,7 @@ export type UserIdOnly = {
   lastName?: string;
   nickname?: string;
   password?: string;
-}
+};
 export interface UserWithPass extends UserAttributes {
   password: string;
   refToken?: string;
@@ -44,3 +44,13 @@ export type RoomAttributes = {
 };
 
 export type RoomModel = Model<RoomAttributes>;
+
+export type AvatarAttributes = {
+  userID: number;
+  filename: string;
+  filepath: string;
+  mimetype: string;
+  size: number;
+};
+
+export type AvatarModel = Model<AvatarAttributes>;

@@ -1,4 +1,4 @@
-import { IAuthService } from './../../types/services.types';
+import { IAuthService } from "./../../types/services.types";
 import { Router } from "express";
 
 const routers = (authService: IAuthService) => {
@@ -7,6 +7,6 @@ const routers = (authService: IAuthService) => {
   router.post("/refresh", authService.refreshToken);
 
   return router;
-}
+};
 
 export default routers;

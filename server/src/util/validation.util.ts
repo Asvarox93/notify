@@ -1,4 +1,8 @@
-import { MessageAttributes, UserIdOnly, UserWithPass } from "../../types/models.types";
+import {
+  MessageAttributes,
+  UserIdOnly,
+  UserWithPass,
+} from "../../types/models.types";
 
 export const userFieldsValidation = (
   user: UserWithPass | UserIdOnly,
@@ -11,10 +15,8 @@ export const userFieldsValidation = (
 
   return false;
 };
-export const messageFieldsValidation = (
-  mess: MessageAttributes,
-): boolean => {
-  const {senderID, receiverID, message }: MessageAttributes = mess;
+export const messageFieldsValidation = (mess: MessageAttributes): boolean => {
+  const { senderID, receiverID, message }: MessageAttributes = mess;
 
   if (senderID && receiverID && message) return true;
 

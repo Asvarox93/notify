@@ -10,5 +10,5 @@ export default class RoomService implements IRoomService {
 
   fetchRoom = (req: Request, res: Response) => {
     return this.roomController.fetchRoom(req, res);
-  }
+  };
 }

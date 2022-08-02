@@ -10,6 +10,7 @@ const loadApp = (routes: IRoutes) => {
   app.use(cors());
   app.use("/api/auth", routes.authRouter);
   app.use("/api/users", routes.userRouter);
+  app.use("/api/avatar", routes.avatarRouter);
   app.use("/api/message", routes.messageRouter);
   app.use("/api/room", routes.roomRouter);
 

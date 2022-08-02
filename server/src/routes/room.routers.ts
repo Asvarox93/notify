@@ -2,7 +2,6 @@ import { Router } from "express";
 import { IRoomService } from "../../types/services.types";
 import authenticate from "../configs/auth.config";
 
-
 const routes = (roomService: IRoomService) => {
   const router = Router();
 
@@ -11,4 +10,4 @@ const routes = (roomService: IRoomService) => {
   return router;
 };
 
-export default routes
+export default routes;

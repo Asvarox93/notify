@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 import dbConfig from "../../database/db.config";
 
-let sequelize
+let sequelize;
 
-if(process.env.NODE_ENV === 'test'){
+if (process.env.NODE_ENV === "test") {
   sequelize = new Sequelize("sqlite::memory:");
 } else {
   sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {

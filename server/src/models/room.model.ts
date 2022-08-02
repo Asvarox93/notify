@@ -33,4 +33,4 @@ const roomModel = (db: Sequelize, user: ModelStatic<UserModel>) => {
   return Room;
 };
 
-export default roomModel
+export default roomModel;

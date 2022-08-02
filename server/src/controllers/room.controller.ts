@@ -22,7 +22,7 @@ export default class RoomController implements IRoomController {
 
     const lowerId = firstUserID < secondUserID ? firstUserID : secondUserID;
     const upperId = firstUserID > secondUserID ? firstUserID : secondUserID;
-    
+
     try {
       let room = await this.roomModel.findOne({
         where: { firstUserID: lowerId, secondUserID: upperId },
