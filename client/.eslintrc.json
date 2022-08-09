@@ -23,6 +23,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "eol-last": "error",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "react/react-in-jsx-scope": "off",
